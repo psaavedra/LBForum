@@ -1,5 +1,6 @@
 from django.template import Library
 from django.contrib.auth.models import User
+import django.contrib.auth
 
 from lbforum.models import Topic, Category, Post
 
@@ -18,5 +19,5 @@ def lbf_status(template='lbforum/widgets/lbf_status.html'):
     return {'template': template,
             'total_topics': Topic.objects.count(),
             'total_posts': Post.objects.count(),
-            'total_users': User.objects.count(),
-            'last_registered_user': User.objects.order_by('-date_joined')[0]}
+            'total_users': django.contrib.auth.get_user_model().objects.count(),
+            'last_registered_user': django.contrib.auth.get_user_model().objects.order_by()[0]}
